@@ -12,6 +12,7 @@ def play_hangman():
         guessed_letters = []
         guesses_left = 6
         word= generate_random_word(words)
+        print('I am thinking a word of ',len(word),'letters long')
         letter = input('Please choose a letter')
         print(word)
         done = False
@@ -28,15 +29,20 @@ def play_hangman():
             else:
                 guessed_letters.append(letter)##add letter to guessed letters
                 print('Congrats!! The letter you guessed is in the word')##tell user the letter is in the word
-            if guessed_letters==word: ##all the letters in the word have been guessed
+            #while True:
+                #for i in range(len(word)):
+            if word in guessed_letters:##all the letters in the word have been guessed
                 print('Congrats!! You found the word!!')
-                break ##set done to be true and tell the user they won!
+                done= True ##set done to be true and tell the user they won!
+                break
             elif guesses_left==0:##the number of guesses left is zero
-                print('Sorry, you have used up all your attempts. You lost.')
-                break ##set done to be true and tell the user they lost!
+                print('Sorry, you have used up all your attempts. You lost.The word I am thinking is', word)
+                done=True ##set done to be true and tell the user they lost!
             else:
                 print_word(word, guessed_letters)##print the word with a dash for each letter not in guessed_letters
                 letter =input('Please enter another letter.') ##ask the user for another letter
+                print(word)
+                print(guessed_letters)
         want_to_play = input('Do you want to play another game? Y/N')##ask the user if they want to play another game...
         if want_to_play=='Y':
             continue
