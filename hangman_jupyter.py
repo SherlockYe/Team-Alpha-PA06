@@ -1,9 +1,9 @@
 import random
 words= 'happy brandeis alpha quarantine coronavirus zoom computerscience programming'.split()
-def get_random_word(wordList):
+def generate_random_word(wordList):
     wordIndex = random.randint(0, len(wordList) - 1)
     return wordList[wordIndex]
-word = get_random_word(words)
+word = generate_random_word(words)
 def print_word(word, guessed_letters1):
     for i in word:
         if i in guessed_letters1:
@@ -51,6 +51,7 @@ def play_hangman():
             if guesses_left==0:##the number of guesses left is zero
                 print('Sorry, you have used up all your attempts. You lost.The word I am thinking is', word)
                 want_to_play=False ##set done to be true and tell the user they lost!
+                break
             else:
                 print_word(word, guessed_letters)##print the word with a dash for each letter not in guessed_letters
                 letter =input('Please enter another letter.') ##ask the user for another letter
