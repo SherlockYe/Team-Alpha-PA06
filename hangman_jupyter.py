@@ -1,21 +1,27 @@
 import random
-words= ['happy', 'brandeis', 'alpha', 'quarantine', 'coronavirus', 'zoom', 'computerscience', 'programming']
-def generate_random_word(w):
-        return random.choice(w)
-def print_word(word1, guessed_letters1):
-    for i in guessed_letters1:
-        if i not in word1:
-            return word1 +'---'+ str(i)
+words= 'happy brandeis alpha quarantine coronavirus zoom computerscience programming'.split()
+def get_random_word(wordList):
+    wordIndex = random.randint(0, len(wordList) - 1)
+    return wordList[wordIndex]
+word = get_random_word(words)
+def print_word(word, guessed_letters1):
+    for i in word:
+        if i in guessed_letters1:
+            print(i)      
+        else:
+            print("-")
 def play_hangman():
     want_to_play = True
     while (want_to_play):
         guessed_letters = []
         guesses_left = 6
-        word= generate_random_word(words)
+        word= random.choice(words)
         print('I am thinking a word of ',len(word),'letters long')
         letter = input('Please choose a letter')
-        print(word)
+        letter=letter.lower()
         done = False
+        correct_letters=''
+        missed_letters=''
         while not done:
             if letter in guessed_letters:
                 guesses_left-=1 ##subtract one from guesses_left
@@ -29,19 +35,25 @@ def play_hangman():
             else:
                 guessed_letters.append(letter)##add letter to guessed letters
                 print('Congrats!! The letter you guessed is in the word')##tell user the letter is in the word
-            #while True:
-                #for i in range(len(word)):
-            if word in guessed_letters:##all the letters in the word have been guessed
-                print('Congrats!! You found the word!!')
-                done= True ##set done to be true and tell the user they won!
-                break
-            elif guesses_left==0:##the number of guesses left is zero
+            if letter in word:
+                correct_letters=correct_letters+letter
+                get_all_letters=True
+                for i in range(len(word)):
+                    if word[i] not in correct_letters:
+                        get_all_letters=False
+                        break
+                if get_all_letters: ##all the letters in the word have been guessed
+                    print('Congrats!! You found the word!! The word is',word)
+                    want_to_play=False ##set done to be true and tell the user they won!
+                    break
+            else:
+                missed_letters=missed_letters+letter
+            if guesses_left==0:##the number of guesses left is zero
                 print('Sorry, you have used up all your attempts. You lost.The word I am thinking is', word)
-                done=True ##set done to be true and tell the user they lost!
+                want_to_play=False ##set done to be true and tell the user they lost!
             else:
                 print_word(word, guessed_letters)##print the word with a dash for each letter not in guessed_letters
                 letter =input('Please enter another letter.') ##ask the user for another letter
-                print(word)
                 print(guessed_letters)
         want_to_play = input('Do you want to play another game? Y/N')##ask the user if they want to play another game...
         if want_to_play=='Y':
